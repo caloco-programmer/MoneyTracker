@@ -1,0 +1,406 @@
+
+<div class="ion-page" id="main-content" scroll="false">
+  <ion-header>
+    <ion-toolbar class="barra" color="secundary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{"Inicio"|translate}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-padding" >
+
+    <div class="cuenta" [routerLink]="['/cuentas/cuentas']">
+      
+      <h3>
+      <span>{{persona.nomb}} <br>{{persona.apellido}}</span>
+    </h3>
+    <div class="container">
+    <span class="dinero">
+      Disponible Debito
+      <br>{{ totalDebito | currency: getSelectedCurrency()}}
+    </span><br>
+    <span class="dinero">
+      Disponible Credito
+      <br>{{ totalCredito | currency: getSelectedCurrency()}}
+    </span>
+  </div>
+    </div>
+    <!-- <ion-button expand="block">
+      load add
+    </ion-button>
+    <ion-button  expand="block">
+     show add
+    </ion-button> -->
+    
+  
+
+
+
+    <div name="uno">
+      <div class="desgloce">
+          <h3>{{"Gastos"|translate}}</h3>
+          <ion-icon name="chevron-down" slot="end" size="large" class="despliegue" (click)="toggleContent('gastos')"  *ngIf="expandedId !== 'gastos'"></ion-icon>
+          <ion-icon name="chevron-up" slot="end" size="large" class="despliegue" (click)="toggleContent('gastos')" *ngIf="expandedId === 'gastos'"></ion-icon>
+      </div>
+      <div  [ngClass]="{'expanded': expandedId === 'gastos'}">
+        <div *ngIf="expandedId === 'gastos'" class="expand">
+          <ion-list>
+            <ion-item [routerLink]="['/cuentas/gastos']">
+              <h2>ir a Gastos</h2>
+            </ion-item>
+            <ion-item *ngFor="let gasto of gastos | slice:0:(mostrarTodos ? gastos.length : 5); let i = index">
+              <ion-label>
+                <h2>{{ gasto.nombre }}</h2>
+                <p>{{ gasto.categoria }}</p>
+                <p>{{ gasto.tipo_mes }}</p>
+
+                <p>{{ gasto.fecha_ingreso | date }}</p>
+              </ion-label>
+              <ion-note slot="end" color="danger">
+                {{ gasto.total | currency: getSelectedCurrency() }}
+              </ion-note>
+            </ion-item>
+        <p>{{"TotalGasto"|translate}}: {{ totalGastos | currency: getSelectedCurrency()}}</p>
+    
+        <ion-item *ngIf="gastos.length > 5 && !mostrarTodos " >
+          <ion-label>{{"MostrarMas"|translate}}</ion-label>
+          <ion-icon name="arrow-down-circle-outline" slot="end" size="large" (click)="expandirLista('gasto')"></ion-icon>
+        </ion-item>
+      
+       
+        <ion-item *ngIf="mostrarTodos" >
+          <ion-label>{{"MostrarMenos"|translate}}</ion-label>
+          <ion-icon name="arrow-up-circle-outline" slot="end" size="large" (click)="contraerLista()"></ion-icon>
+        </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+    
+    <div name="dos">
+      <div class="desgloce">
+          <h3>{{"Ahorros"|translate}}</h3>
+          <ion-icon name="chevron-down" slot="end" size="large" class="despliegue" (click)="toggleContent('ahorros')"  *ngIf="expandedId !== 'ahorros'"></ion-icon>
+          <ion-icon name="chevron-up" slot="end" size="large" class="despliegue" (click)="toggleContent('ahorros')" *ngIf="expandedId === 'ahorros'"></ion-icon>
+      </div>
+      <div  [ngClass]="{'expanded': expandedId === 'ahorros'}">
+        <div *ngIf="expandedId === 'ahorros'" class="expand">
+          <ion-list>
+            <ion-item [routerLink]="['/cuentas/ahorros']">
+              <h2>ir a Ahorros</h2>
+            </ion-item>
+            <ion-item *ngFor="let ahorro of ahorros | slice:0:(mostrarTodos ? ahorros.length : 5); let i = index">
+              <ion-label>
+                <h2>{{ ahorro.nombre }}</h2>
+                <h2>{{ahorro.tipo}}</h2>
+                <p>{{"Total"|translate}}: {{ ahorro.total_alcanzar | currency: getSelectedCurrency() }}</p>
+                <ion-progress-bar 
+                  [value]="ahorro.total / ahorro.total_alcanzar"
+                  color="success">
+                </ion-progress-bar>
+              </ion-label>
+              <ion-note slot="end" color="success">
+                {{ ahorro.total | currency: getSelectedCurrency() }}
+              </ion-note>
+            </ion-item>
+
+           
+      <p>{{"TotalAhorro"|translate}}: {{ totalAhorros | currency: getSelectedCurrency()}}</p>
+    
+      <ion-item *ngIf="ahorros.length > 5 && !mostrarTodos" >
+        <ion-label>{{"MostrarMas"|translate}}</ion-label>
+    
+        <ion-icon name="arrow-down-circle-outline" slot="end" size="large" (click)="expandirLista('ahorro')"></ion-icon>
+      </ion-item>
+    
+     
+      <ion-item *ngIf="mostrarTodos" >
+        <ion-label>{{"MostrarMenos"|translate}}</ion-label>
+    
+        <ion-icon name="arrow-up-circle-outline" slot="end" size="large" (click)="contraerLista()"></ion-icon>
+      </ion-item>
+    
+          </ion-list>
+          
+        </div>
+      </div>
+    </div>
+    
+    
+    <div name="tres">
+      <div class="desgloce">
+          <h3>{{"Ingresos"|translate}}</h3>
+          <ion-icon name="chevron-down" slot="end" size="large" class="despliegue" (click)="toggleContent('ingresos')"  *ngIf="expandedId !== 'ingresos'"></ion-icon>
+          <ion-icon name="chevron-up" slot="end" size="large" class="despliegue" (click)="toggleContent('ingresos')" *ngIf="expandedId === 'ingresos'"></ion-icon>
+      </div>
+      <div  [ngClass]="{'expanded': expandedId === 'ingresos'}">
+        <div *ngIf="expandedId === 'ingresos'" class="expand">
+          <ion-list>
+            <ion-item [routerLink]="['/cuentas/ingresos']">
+              <h2>ir a Ingresos</h2>
+            </ion-item>
+            <ion-item *ngFor="let ingreso of ingresos | slice:0:(mostrarTodos ? ingresos.length : 5); let i = index">
+              <ion-label>
+                <h2>{{ ingreso.nombre }}</h2>
+                <p>{{ ingreso.categoria }}</p>
+                <p>{{ ingreso.tipo_mes }}</p>
+
+                <p>{{ ingreso.fecha_ingreso | date }}</p>
+              </ion-label>
+              <ion-note slot="end" color="danger">
+                {{ ingreso.total | currency: getSelectedCurrency() }}
+              </ion-note>
+            </ion-item>
+        <p>{{"TotalIngreso"|translate}}: {{ totalIngresos | currency: getSelectedCurrency()}}</p>
+    
+        <ion-item *ngIf="ingresos.length > 5 && !mostrarTodos" >
+          <ion-label>{{"MostrarMas"|translate}}</ion-label>
+    
+          <ion-icon name="arrow-down-circle-outline" slot="end" size="large" (click)="expandirLista('ingreso')"></ion-icon>
+        </ion-item>
+      
+       
+        <ion-item *ngIf="mostrarTodos" >
+          <ion-label>{{"MostrarMenos"|translate}}</ion-label>
+    
+          <ion-icon name="arrow-up-circle-outline" slot="end" size="large" (click)="contraerLista()"></ion-icon>
+        </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+    
+    <div name="cuatro">
+      <div class="desgloce">
+          <h3>{{"Deudas"|translate}}</h3>
+          <ion-icon name="chevron-down" slot="end" size="large" class="despliegue" (click)="toggleContent('deudas')"  *ngIf="expandedId !== 'deudas'"></ion-icon>
+          <ion-icon name="chevron-up" slot="end" size="large" class="despliegue" (click)="toggleContent('deudas')" *ngIf="expandedId === 'deudas'"></ion-icon>
+      </div>
+      <div  [ngClass]="{'expanded': expandedId === 'deudas'}">
+        <div *ngIf="expandedId === 'deudas'" class="expand">
+          <ion-list>
+            <ion-item [routerLink]="['/cuentas/deudas']">
+              
+              <h2 >ir a Deudas</h2>
+            
+            </ion-item>
+            <ion-item *ngFor="let deuda of deudas | slice:0:(mostrarTodos ? deudas.length : 5); let i = index">
+              <ion-label>
+                <h2>{{ deuda.nombre }}</h2>
+                <p>{{ deuda.descripcion }}</p>
+                <p>{{"Progreso"|translate}}: {{ deuda.cuotas_pago }}/{{ deuda.cuotas }}</p>
+                <ion-progress-bar 
+                  [value]="deuda.total_pagado / deuda.total"
+                  color="warning">
+                </ion-progress-bar>
+              </ion-label>
+              <ion-note slot="end" color="warning">
+                {{ deuda.total | currency: getSelectedCurrency() }}
+              </ion-note>
+            </ion-item>
+            <ion-item *ngFor="let prestamo of prestamos | slice:0:(mostrarTodos ? prestamos.length : 5); let i = index">
+              <ion-label *ngIf="prestamo.user_friend === persona.username">
+                <h2>{{ prestamo.nombre }}</h2>
+                <p>{{ prestamo.descripcion }}</p>
+                <p>{{"Prestado"|translate}}: {{ prestamo.user_friend }}</p>
+                <ion-progress-bar 
+                  [value]="prestamo.total_pagado / prestamo.total"
+                  color="tertiary">
+                </ion-progress-bar>
+              </ion-label>
+              <ion-note slot="end" color="tertiary" *ngIf="prestamo.user_friend === persona.username">
+                {{ prestamo.total | currency: getSelectedCurrency() }}
+              </ion-note>
+            </ion-item>
+            <p>
+              {{"TotalDeuda" | translate}}: {{ totalDeudas | currency: getSelectedCurrency() }}
+           </p>
+           
+    
+    
+      <ion-item *ngIf="deudas.length > 5 && !mostrarTodos" >
+        <ion-label>{{"MostrarMas"|translate}}</ion-label>
+    
+        <ion-icon name="arrow-down-circle-outline" slot="end" size="large" (click)="expandirLista('deuda')"></ion-icon>
+      </ion-item>
+    
+     
+      <ion-item *ngIf="mostrarTodos" >
+        <ion-label>{{"MostrarMenos"|translate}}</ion-label>
+    
+        <ion-icon name="arrow-up-circle-outline" slot="end" size="large" (click)="contraerLista()"></ion-icon>
+      </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+    
+    <div name="cinco">
+      <div class="desgloce">
+          <h3>{{"Prestamos"|translate}}</h3>
+          <ion-icon name="chevron-down" slot="end" size="large" class="despliegue" (click)="toggleContent('inversiones')"  *ngIf="expandedId !== 'inversiones'"></ion-icon>
+          <ion-icon name="chevron-up" slot="end" size="large" class="despliegue" (click)="toggleContent('inversiones')" *ngIf="expandedId === 'inversiones'"></ion-icon>
+      </div>
+      <div  [ngClass]="{'expanded': expandedId === 'inversiones'}">
+        <div *ngIf="expandedId === 'inversiones'" class="expand">
+          <ion-list>
+            <ion-item [routerLink]="['/prestamos/prestamos']">
+              
+              <h2 >ir a Prestamos</h2>
+            
+            </ion-item>
+            <ion-item *ngIf="totalPrestamos2 > 0 ">
+            <ion-item *ngFor="let prestamo of prestamos | slice:0:(mostrarTodos ? prestamos.length : 5); let i = index" >
+              <ion-label >
+                <h2>{{ prestamo.nombre }}</h2>
+                <p>{{ prestamo.descripcion }}</p>
+                <p>{{"Prestado"|translate}}: {{ prestamo.user_friend }}</p>
+                <ion-progress-bar 
+                  [value]="prestamo.total_pagado / prestamo.total"
+                  color="tertiary">
+                </ion-progress-bar>
+              </ion-label>
+              <ion-note slot="end" color="tertiary" >
+                {{ prestamo.total | currency: getSelectedCurrency() }}
+              </ion-note>
+            </ion-item>
+          </ion-item>
+      <p>{{"TotalPrestamo"|translate}}: {{ totalPrestamos2 | currency: getSelectedCurrency()}}</p>
+    
+    
+      <ion-item *ngIf="prestamos.length > 5 && !mostrarTodos" >
+        <ion-label>{{"MostrarMas"|translate}}</ion-label>
+    
+        <ion-icon name="arrow-down-circle-outline" slot="end" size="large" (click)="expandirLista('prestamo')"></ion-icon>
+      </ion-item>
+    
+     
+      <ion-item *ngIf="mostrarTodos" >
+        <ion-label>{{"MostrarMenos"|translate}}</ion-label>
+    
+        <ion-icon name="arrow-up-circle-outline" slot="end" size="large" (click)="contraerLista()"></ion-icon>
+      </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+    
+
+<swiper-container
+  (slidechange)="swiperSlideChanged($event)"
+  [loop]="true"
+  [pagination]="true"
+  slides-per-view="1"
+  space-between="0"
+  observer="true"
+  observer-parents="true"
+  style="overflow: hidden;"
+>
+<swiper-slide (click)="onOptionChange({ detail: { value: 'modalGasto' } })">
+  <div class="slide-content">
+    <h2>{{"GastosUnico"|translate}}</h2>
+    <p>{{"AnadirGasto"|translate}}</p>
+  </div>
+</swiper-slide>
+<swiper-slide (click)="onOptionChange({ detail: { value: 'modalGastoMensual' } })">
+  <div class="slide-content">
+    <h2>{{"GastoMensual"|translate}}</h2>
+    <p>{{"anadirGastoMensual"|translate}}</p>
+  </div>
+</swiper-slide>
+<swiper-slide (click)="onOptionChange({ detail: { value: 'modalGastoCuotas' } })">
+  <div class="slide-content">
+    <h2>{{"GastosCuotas"|translate}}</h2>
+    <p>{{"anadirGastoCuota"|translate}}</p>
+  </div>
+</swiper-slide>
+
+<swiper-slide (click)="onOptionChange({ detail: { value: 'modalAhorro' } })">
+  <div class="slide-content">
+    <h2>{{ 'AhorrosManuales' | translate }}</h2>
+    <p>{{ 'AñadirAhorrosManuales' | translate }}</p>
+  </div>
+</swiper-slide>
+<swiper-slide (click)="onOptionChange({ detail: { value: 'modalAhorroMensual' } })">
+  <div class="slide-content">
+    <h2>{{ 'AhorrosAutomaticos' | translate }}</h2>
+    <p>{{ 'AñadirAhorrosAutomaticos' | translate }}</p>
+  </div>
+</swiper-slide>
+<swiper-slide (click)="onOptionChange({ detail: { value: 'modalIngreso' } })">
+  <div class="slide-content">
+    <h2>{{"IngresoUnico"|translate}}</h2>
+    <p>{{"AnadirIngresoUnico"|translate}}</p>
+  </div>
+</swiper-slide>
+<swiper-slide (click)="onOptionChange({ detail: { value: 'modalIngresoMensual' } })">
+  <div class="slide-content">
+    <h2>{{"IngresoMensual"|translate}}</h2>
+    <p>{{"AnadirIngresoMensual"|translate}}</p>
+  </div>
+</swiper-slide>
+  <swiper-slide (click)="onOptionChange({ detail: { value: 'modalPrestamo' } })">
+    <div class="slide-content">
+      <h2>{{"Prestamos"|translate}}</h2>
+      <p>{{"AnadirPrestamo"|translate}}</p>
+    </div>
+  </swiper-slide>
+ 
+</swiper-container>
+
+<div class="espacio">
+
+</div>
+
+<div class="navigation">
+  <ul>
+  <li class="active" [routerLink]="['/index/index']">
+    <a href=""> <span class="icon">
+        <ion-icon name="home-outline"></ion-icon>
+                </span>
+    </a>
+  </li>
+
+  <li class="active" [routerLink]="['/history/history']">
+    <a href=""> <span class="icon">
+        <ion-icon name="newspaper-outline"></ion-icon>
+                </span>
+    </a>
+  </li>
+
+  <li class=" active" [routerLink]="['/informes/informes']">
+    <a href=""> <span class="icon">
+        <ion-icon name="document-text-outline"></ion-icon>
+                </span>
+    </a>
+  </li>
+
+  <li class=" active" [routerLink]="['/config/config']">
+    <a href=""> <span class="icon">
+        <ion-icon name="settings-outline"></ion-icon>
+                </span>
+    </a>
+  </li>
+
+  <li class="active" [routerLink]="['/perfil/perfil']">
+    <a href=""> <span class="icon">
+        <ion-icon name="person-circle-outline"></ion-icon>
+                </span>
+    </a>
+  </li>
+
+  <div class="indicator"><span></span></div>
+</ul>
+</div>
+
+
+
+
+
+
+
+  </ion-content>
+
+

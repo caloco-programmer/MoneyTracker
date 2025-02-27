@@ -1,0 +1,184 @@
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar >
+      <ion-title>Menu Content</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">This is the menu content.</ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content" scroll="false">
+  <ion-header>
+    <ion-toolbar class="barra" color="secundary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{"Gastos"|translate}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding" >
+   
+   
+<ion-list>
+  <ion-item>
+    <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="filtrarGastos($event)">
+      <ion-select-option [value]="todos">{{"MostrarTodos"|translate}}</ion-select-option>
+      <ion-select-option *ngFor="let tarjeta of tarjetasDebito" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  
+  
+  
+</ion-list>
+<swiper-container
+(slidechange)="swiperSlideChanged($event)"
+[loop]="true"
+[pagination]="true"
+slides-per-view="1"
+space-between="0"
+observer="true"
+observer-parents="true"
+style="overflow: hidden;"
+>
+<swiper-slide (click)="onOptionChange({ detail: { value: 'modalGasto' } })">
+  <div class="slide-content">
+    <h2>{{"GastosUnico"|translate}}</h2>
+    <p>{{"AnadirGasto"|translate}}</p>
+  </div>
+</swiper-slide>
+<swiper-slide (click)="onOptionChange({ detail: { value: 'modalGastoMensual' } })">
+  <div class="slide-content">
+    <h2>{{"GastoMensual"|translate}}</h2>
+    <p>{{"anadirGastoMensual"|translate}}</p>
+  </div>
+</swiper-slide>
+<swiper-slide (click)="onOptionChange({ detail: { value: 'modalGastoCuotas' } })">
+  <div class="slide-content">
+    <h2>{{"GastosCuotas"|translate}}</h2>
+    <p>{{"anadirGastoCuota"|translate}}</p>
+  </div>
+</swiper-slide>
+
+
+</swiper-container>
+
+ 
+
+  <ion-icon name="add-circle-outline" size="large" slot="end"></ion-icon>
+  <ion-button class="eliminar" color="morado" (click)="eliminar()">
+    <!-- Cambia el texto del botón según el estado -->
+    {{ mostrarEliminarIconos ? ('Cancelar'|translate) : ('Eliminar'|translate) }}
+  </ion-button>
+  <ion-button class="eliminar" color="morado" (click)="editarButon()">
+    <!-- Cambia el texto del botón según el estado -->
+    {{ mostrarEditarIconos ? ('Cancelar'|translate) : ('Editar'|translate) }}
+  </ion-button>
+
+
+<div class="">
+  <div class="iconos">
+  
+</div>
+  <!-- .datos>ion-list>ion-item{$10.000}*20 -->
+   
+  
+  <div class=" expand">
+    
+  <h3>{{"Gastos"|translate}}</h3>
+   
+    <ion-list>
+      <ion-item>
+        <p class="total">${{"TotalGasto"|translate}}: {{ totalGastos | currency: getSelectedCurrency()}}</p>
+
+      </ion-item>
+      <ion-item *ngFor="let gasto of gastos | slice:0:(mostrarTodos ? gastos.length : 5); let i = index">
+        <ion-label>
+          <h2>{{ gasto.nombre }}</h2>
+          <p>{{ gasto.categoria }}</p>
+          <p>{{ gasto.tipo_mes}}</p>
+
+          <p>{{ gasto.fecha_ingreso | date }}</p>
+        </ion-label>
+        <ion-note slot="end" color="danger" class="total">
+          ${{ gasto.total | currency: getSelectedCurrency()}}
+        </ion-note>
+        <ion-icon *ngIf="mostrarEliminarIconos" name="remove-circle-outline" size="large" slot="end" (click)="eliminar_gasto(gasto.id_gasto)"></ion-icon>
+        <ion-icon *ngIf="mostrarEditarIconos" name="brush-outline" size="large" slot="end" (click)="editar(gasto)"></ion-icon>
+      </ion-item>
+
+     
+      <!-- Botón Mostrar más -->
+      <ion-item *ngIf="gastos.length > cantidadVisible && mostrarGasto">
+        <ion-label>{{"MostrarMas"|translate}}</ion-label>
+        <ion-icon name="arrow-down-circle-outline" slot="end" size="large" (click)="expandirLista()"></ion-icon>
+      </ion-item>
+      
+      <!-- Botón Mostrar menos -->
+      <ion-item *ngIf="mostrarTodos">
+        <ion-label>{{"MostrarMenos"|translate}}</ion-label>
+        <ion-icon name="arrow-up-circle-outline" slot="end" size="large" (click)="contraerLista()"></ion-icon>
+      </ion-item>
+      
+    </ion-list>
+  </div>
+</div>
+
+
+
+
+<div class="grafico">
+  <ion-item>
+    <ion-label>{{"TipoGrafico"|translate}}</ion-label>
+    <ion-select [(ngModel)]="selectedChartType" (ionChange)="updateChart()">
+      <ion-select-option value="bar">{{"Barras"|translate}}</ion-select-option>
+      <ion-select-option value="line">{{"Lineal"|translate}}</ion-select-option>
+      <ion-select-option value="doughnut">{{"Circular"|translate}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <canvas id="gastos"></canvas>
+</div>
+
+
+
+
+<div class="navigation">
+  <ul>
+  <li class="active" [routerLink]="['/index/index']">
+    <a href=""> <span class="icon">
+        <ion-icon name="home-outline"></ion-icon>
+                </span>
+    </a>
+  </li>
+
+  <li class="active" [routerLink]="['/history/history']">
+    <a href=""> <span class="icon">
+        <ion-icon name="newspaper-outline"></ion-icon>
+                </span>
+    </a>
+  </li>
+
+  <li class=" active" [routerLink]="['/informes/informes']">
+    <a href=""> <span class="icon">
+        <ion-icon name="document-text-outline"></ion-icon>
+                </span>
+    </a>
+  </li>
+
+  <li class=" active" [routerLink]="['/config/config']">
+    <a href=""> <span class="icon">
+        <ion-icon name="settings-outline"></ion-icon>
+                </span>
+    </a>
+  </li>
+
+  <li class="active" [routerLink]="['/perfil/perfil']">
+    <a href=""> <span class="icon">
+        <ion-icon name="person-circle-outline"></ion-icon>
+                </span>
+    </a>
+  </li>
+
+  <div class="indicator"><span></span></div>
+</ul>
+</div>
+  </ion-content>  

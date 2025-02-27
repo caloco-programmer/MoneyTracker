@@ -1,0 +1,27 @@
+<ion-app scroll="false"> 
+
+  <div class="ion-page" id="main-content" scroll="false">
+    <ion-header>
+      
+    </ion-header>
+    <ion-content class="ion-padding" color="celeste"scroll="false">
+      
+      <div class="relleno">
+        <ion-input [(ngModel)]="nombre" placeholder="{{'Nombre'|translate}}"></ion-input>
+        <ion-input [(ngModel)]="apellido" placeholder="{{'Apellido'|translate}}"></ion-input>
+        <ion-input [(ngModel)]="username" placeholder="{{'Usuario'|translate}}"></ion-input>
+        <ion-input [(ngModel)]="gmail" placeholder="{{'Correo'|translate}}" type="email"></ion-input>
+        <ion-input [(ngModel)]="password" type="password" placeholder="{{'Contrasena'|translate}}"></ion-input>
+
+        <ion-button (click)="agregarUsuario()" shape="round" color="morado" >
+          {{"Registro"|translate}}
+        </ion-button>
+        <h3 [routerLink]="['/login/login']">{{"Cuenta"|translate}}</h3>
+      </div>
+     
+  
+  
+      </ion-content>
+  </div>
+  </ion-app>
+  

@@ -1,0 +1,43 @@
+<ion-app scroll="false"> 
+
+<div class="ion-page" id="main-content" scroll="false">
+  <ion-header>
+    
+  </ion-header>
+  <ion-content class="ion-padding" color="celeste"scroll="false">
+    
+    <div class="relleno">
+      <div class="perfil">
+      
+        <ion-icon name="person"></ion-icon>
+      
+      </div>
+
+       
+        
+        <ion-input [(ngModel)]="username" placeholder="{{'Usuario'|translate}}"></ion-input>
+        <ion-input [(ngModel)]="password" type="password" placeholder="{{'Contrasena'|translate}}" value="">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+        <ion-button   (click)="iniciar_sesion()" shape="round" color="morado">
+          {{"Ingresar"|translate}}</ion-button>
+         
+            <ion-checkbox [(ngModel)]="keepLoggedIn">{{ "MantenerConectado" | translate }}</ion-checkbox>
+          
+
+         
+
+        
+        <h3 [routerLink]="['/login/recuperar']">{{"Olvido"|translate}}</h3>
+        <h3 [routerLink]="['/login/registrarse']">{{"Registro"|translate}}</h3>
+
+        
+      
+      
+    </div>
+   
+
+
+    </ion-content>
+</div>
+</ion-app>

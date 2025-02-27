@@ -1,0 +1,40 @@
+<ion-app scroll="false"> 
+ 
+  <div class="ion-page" id="main-content" scroll="false">
+    <ion-header>
+      
+    </ion-header>
+    <ion-content class="ion-padding" color="celeste"scroll="false">
+      
+      <div class="relleno">
+        <div class="perfil">
+        
+          <ion-icon name="person"></ion-icon>
+        
+        </div>
+  
+         
+          <ion-input [(ngModel)]="username" placeholder="{{'Usuario'|translate}}"></ion-input>
+          <ion-input [(ngModel)]="email" placeholder="{{'Correo'|translate}}"></ion-input>
+
+          
+  
+          <ion-button shape="round" (click)="presentAlert()" color="morado">
+            {{"Aceptar"|translate}}</ion-button>
+         
+          
+          <h3 [routerLink]="['/login/login']">{{"Cuenta"|translate}}</h3>
+          <h3 [routerLink]="['/login/registrarse']">{{"Registro"|translate}}</h3>
+  
+          
+        
+        
+      </div>
+     
+  
+  
+      </ion-content>
+  </div>
+  </ion-app>
+  
+ 

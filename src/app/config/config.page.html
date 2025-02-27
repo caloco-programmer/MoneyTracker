@@ -1,0 +1,150 @@
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar >
+      <ion-title>Menu Content</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">This is the menu content.</ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content" scroll="false">
+  <ion-header>
+    <ion-toolbar class="barra" color="secundary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{"Configuracion"|translate}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding" color="gris" fullscreen>
+    <div class="settings-container">
+      <ion-list>
+        <!-- Configuración de Idioma -->
+        <ion-item>
+          <ion-label>{{"Idioma"|translate}}</ion-label>
+          <ion-select placeholder="{{'SeleccionIdioma'|translate}}" [value]="getSelectedLanguaje()" (ionChange)="changeLang($event)">
+            <ion-select-option *ngFor=" let lang of langs">{{lang}}</ion-select-option>
+            
+          </ion-select>
+        </ion-item>
+  
+        <!-- Configuración de Moneda -->
+        <ion-item>
+          <ion-label>{{"Moneda"|translate}}</ion-label>
+          <ion-select placeholder="{{'SeleccionMoneda'|translate}}"
+          (ionChange)="changeCurrency($event)" 
+    [value]="getSelectedCurrency()">
+            <ion-select-option value="USD">USD</ion-select-option>
+            <ion-select-option value="EUR">EUR</ion-select-option>
+            <ion-select-option value="CLP">CLP</ion-select-option>
+            <ion-select-option value="BRL">BRL</ion-select-option>
+            
+          </ion-select>
+        </ion-item>
+  
+        <!-- Tema Oscuro/Claro -->
+        <!-- <ion-item>
+          <ion-label>{{"TemaOscuro"|translate}}</ion-label>
+          <ion-toggle  (ionChange)="toggleDarkMode()"></ion-toggle>
+        </ion-item> -->
+  
+        <!-- Fecha -->
+        
+  
+        <!-- Informes Automáticos -->
+        
+  
+        <!-- Políticas de Privacidad -->
+        
+
+        <!-- <ion-item (click)="togglePrivacyPolicy()" detail="false" class="privacy-header">
+          <ion-label>{{"PoliticasPrivacidad"|translate}}</ion-label>
+          <ion-icon [name]="isPrivacyExpanded ? 'chevron-up-outline' : 'chevron-down-outline'" slot="end"></ion-icon>
+        </ion-item>
+        
+       
+        <div class="privacy-content" [class.expanded]="isPrivacyExpanded">
+          <ion-card>
+            <ion-card-content>
+              <h2>{{"PoliticasPrivacidad"|translate}}</h2>
+              <div class="privacy-section">
+                <h3>1. Recolección de Datos</h3>
+                <p>Explicación sobre cómo recolectamos y usamos los datos...</p>
+              </div>
+              
+              <div class="privacy-section">
+                <h3>2. Uso de la Información</h3>
+                <p>Detalles sobre cómo se utiliza la información recopilada...</p>
+              </div>
+              
+              <div class="privacy-section">
+                <h3>3. Protección de Datos</h3>
+                <p>Información sobre medidas de seguridad implementadas...</p>
+              </div>
+              
+              <div class="privacy-section">
+                <h3>4. Derechos del Usuario</h3>
+                <p>Explicación de los derechos del usuario sobre sus datos...</p>
+              </div>
+              
+              <div class="privacy-section">
+                <h3>5. Contacto</h3>
+                <p>Información de contacto para consultas sobre privacidad...</p>
+              </div>
+              
+             
+              <ion-button expand="block" fill="clear" (click)="openFullPrivacyPolicy()">
+                {{"VerVersionCompleta"|translate}}
+                <ion-icon name="open-outline" slot="end"></ion-icon>
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        </div> -->
+      </ion-list>
+    </div>
+
+    <div class="espacio">
+
+    </div>
+  
+    <div class="navigation">
+      <ul>
+      <li class="active" [routerLink]="['/index/index']">
+        <a href=""> <span class="icon">
+            <ion-icon name="home-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class="active" [routerLink]="['/history/history']">
+        <a href=""> <span class="icon">
+            <ion-icon name="newspaper-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class=" active" [routerLink]="['/informes/informes']">
+        <a href=""> <span class="icon">
+            <ion-icon name="document-text-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class=" active" [routerLink]="['/config/config']">
+        <a href=""> <span class="icon">
+            <ion-icon name="settings-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class="active" [routerLink]="['/perfil/perfil']">
+        <a href=""> <span class="icon">
+            <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <div class="indicator"><span></span></div>
+    </ul>
+    </div>
+  </ion-content>

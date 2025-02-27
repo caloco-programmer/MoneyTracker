@@ -1,0 +1,89 @@
+/* Variables para breakpoints */
+:root {
+  --mobile: 576px;
+  --tablet: 768px;
+  --desktop: 992px;
+  --input-height: 40px;
+}
+
+/* Estilos base */
+.relleno {
+  margin: 5%;
+  margin-top: 30%;
+  text-align: center;
+  color: black;
+  width: 90%;
+  height: 70%;
+  background-color: rgb(89, 191, 250);
+  border-bottom-right-radius: 100px;
+  border-top-left-radius: 100px;
+  box-shadow: -8px 0px 94px 0px rgba(102,132,140,1);
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ion-input {
+  background-color: white;
+  width: 85%;
+  height: var(--input-height);
+  border-radius: 100px;
+  margin: 8px auto;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  
+  &::part(native) {
+    height: var(--input-height);
+  }
+}
+
+/* Asegurando que el input de contraseña tenga exactamente el mismo tamaño */
+ion-input[type="password"] {
+  height: var(--input-height);
+  --height: var(--input-height);
+}
+
+ion-button {
+  width: 85%;
+  height: 40px;
+  margin: 8px auto;
+  --background: #9c27b0;  /* Color morado similar al de la imagen */
+  --border-radius: 100px;
+  --color: white;
+  font-weight: bold;
+}
+
+ion-icon {
+  font-size: 80px;
+  color: black;
+  margin: 20px 0;
+}
+
+.perfil {
+  margin-bottom: 15px;
+}
+
+h3 {
+  margin: 8px 0;
+  color: #333;
+  font-size: 1.4rem;
+  cursor: pointer;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 576px) {
+  .relleno {
+    margin-top: 20%;
+  }
+  
+  ion-input, ion-button {
+    width: 90%;
+  }
+}

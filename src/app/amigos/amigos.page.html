@@ -1,0 +1,114 @@
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{ "Amigos" | translate }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    {{ "Categorias" | translate }}
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content" scroll="false">
+  <ion-header>
+    <ion-toolbar class="barra" color="secundary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ "Amigos" | translate }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-icon name="add-circle-outline" size="large" slot="end"></ion-icon>
+    <ion-button class="eliminar" color="morado" (click)="eliminar()">
+      {{ mostrarEliminarIconos ? ("Cancelar" | translate) : ("Eliminar" | translate) }}
+    </ion-button>
+    <ion-button class="descargar" color="morado" (click)="toggleEdit()">
+      {{ isEditing ? ("Cancelar" | translate) : ("Añadir Amigo" | translate) }}
+    </ion-button>
+    <ion-input *ngIf="isEditing" [(ngModel)]="user_friend" placeholder="{{ 'USUARIO' | translate }}"></ion-input>
+    <ion-button color="morado" (click)="agregarAmigo()">{{ "Aceptar" | translate }}</ion-button>
+
+    <ion-list *ngFor="let friend of friends">
+      <ion-item>
+        <ion-label *ngIf="friend.estado === 'SOLICITADO'">{{ friend.username }}</ion-label>
+        <ion-button *ngIf="friend.estado === 'SOLICITADO'" color="success" (click)="saveFriends('aceptado', friend.username)">
+          {{ "Aceptar" | translate }}
+        </ion-button>
+        <ion-button *ngIf="friend.estado === 'SOLICITADO'" color="danger" (click)="saveFriends('rechazado', friend.username)">
+          {{ "Rechazar" | translate }}
+        </ion-button>
+        <ion-label *ngIf="friend.estado === 'aceptado'">{{ friend.username }}</ion-label>
+        <ion-label *ngIf="friend.estado === 'aceptado'">{{ "Amigo" | translate }}</ion-label>
+        <ion-icon *ngIf="mostrarEliminarIconos" name="remove-circle-outline" size="large" slot="end" (click)="eliminarAmigo()">
+        </ion-icon>
+        <ion-label *ngIf="friend.estado === 'rechazado'">{{ "Rechazado" | translate }}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-modal #modal trigger="open-modal" [canDismiss]="canDismiss" [presentingElement]="presentingElement" [isOpen]="isModalOpen">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>{{ "Añadir amigos" | translate }}</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false)">{{ "Cerrar" | translate }}</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <div class="formulario">
+          <ion-list>
+            <ion-item>
+              <ion-input [(ngModel)]="user_friend" placeholder="{{ 'USUARIO' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-list>
+        </div>
+        <div>
+          <ion-button color="morado" (click)="agregarAmigo()">{{ "Aceptar" | translate }}</ion-button>
+          <ion-button (click)="setOpen(false)" color="morado">{{ "Cancelar" | translate }}</ion-button>
+        </div>
+      </ng-template>
+    </ion-modal>
+
+    <div class="navigation">
+      <ul>
+      <li class="active" [routerLink]="['/index/index']">
+        <a href=""> <span class="icon">
+            <ion-icon name="home-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class="active" [routerLink]="['/history/history']">
+        <a href=""> <span class="icon">
+            <ion-icon name="newspaper-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class=" active" [routerLink]="['/informes/informes']">
+        <a href=""> <span class="icon">
+            <ion-icon name="document-text-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class=" active" [routerLink]="['/config/config']">
+        <a href=""> <span class="icon">
+            <ion-icon name="settings-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class="active" [routerLink]="['/perfil/perfil']">
+        <a href=""> <span class="icon">
+            <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <div class="indicator"><span></span></div>
+    </ul>
+    </div>
+  </ion-content>  
+  

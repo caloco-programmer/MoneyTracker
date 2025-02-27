@@ -1,0 +1,147 @@
+
+<div class="ion-page" id="main-content" scroll="false">
+  <ion-header>
+    <ion-toolbar class="barra" color="secundary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{"Informes"|translate}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding" color="gris">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{"ConfigInforme"|translate}}</ion-card-title>
+        <ion-card-subtitle>{{"DescInforme"|translate}}</ion-card-subtitle>
+      </ion-card-header>
+  
+      <ion-card-content>
+        
+          <!-- Selector de Mes -->
+          <ion-item>
+            <ion-label position="stacked">{{"SeleccionMes"|translate}}</ion-label>
+            <ion-searchbar
+  [(ngModel)]="selectedMonth"
+  show-cancel-button="always"
+  cancel-button-text="Clear"
+  cancel-button-icon="trash"
+  placeholder="Selecciona un mes"
+  type="month"
+  (ionChange)="filtrarPorFecha()"
+  (ionClear)="limpiarFiltro()"
+></ion-searchbar>
+          </ion-item>
+  
+          <!-- Campo de Correo -->
+           <ion-item>
+            <ion-toggle (ionChange)="correoCambio($event)">{{"CopiaCorreo"|translate}}</ion-toggle>
+           </ion-item>
+          <ion-item *ngIf="correoCambiar === true">
+            <ion-label position="stacked">{{"Correo"|translate}}</ion-label>
+            <ion-input type="email" placeholder="{{'Correo'|translate}}" [(ngModel)]="persona.gmail" [value]="persona.gmail"></ion-input>
+          </ion-item>
+  
+          <!-- Selector de Tarjeta -->
+          <ion-item>
+            <ion-label position="stacked">{{"SeleccionTarjeta"|translate}}</ion-label>
+            <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="filtrarTodo()" multiple="true">
+              <ion-select-option   value="">{{"MostrarTodos"|translate}}</ion-select-option>
+              <ion-select-option *ngFor="let tarjeta of tarjetasOriginales" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <!-- Selector de Categorías -->
+          
+
+          <ion-item>
+            <ion-label position="stacked">{{"SeleccionCategoria"|translate}}</ion-label>
+            <ion-select multiple="true" placeholder="{{'SeleccionCategoria'|translate}}" [(ngModel)]="id_categoria" (ionChange)="filtrarCategoria()">
+              <ion-select-option *ngFor="let categoria of categoriasOriginales" [value]="categoria.id_categoria">{{categoria.nombre}}</ion-select-option>
+
+            </ion-select>
+          </ion-item>
+
+
+          <ion-item>
+            <ion-label position="stacked">{{"TipoInforme"|translate}}</ion-label>
+            <ion-select multiple="true" placeholder="{{'TipoInforme'|translate}}" [(ngModel)]="filtroInforme" (ionChange)="onReportTypeChange($event)">
+              <ion-select-option *ngFor="let filtro of filtroInforme" [value]="filtro.nombre">{{filtro.nombre}}</ion-select-option>
+              
+            </ion-select>
+          </ion-item>
+          
+  
+          <!-- Selector de Tipo de Informe -->
+         
+  
+          <!-- Botones de Acción -->
+          <div class="ion-padding">
+            <ion-button expand="block" color="primary" (click)="DescargarInforme()">
+              <ion-icon slot="start" name="download-outline"></ion-icon>
+              {{"DescargarInforme"|translate}}
+            </ion-button>
+            <ion-button expand="block" color="primary" (click)="MostrarInforme()">
+              <ion-icon slot="start" name="eye"></ion-icon>
+              {{"PreviInforme"|translate}}
+            </ion-button>
+            
+            
+          </div>
+
+          
+       
+      </ion-card-content>
+    </ion-card>
+
+    <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+
+  <!-- Mostrar el PDF en un iframe -->
+ 
+
+    
+    <div class="espacio"></div>
+
+
+    
+
+    <div class="navigation">
+      <ul>
+      <li class="active" [routerLink]="['/index/index']">
+        <a href=""> <span class="icon">
+            <ion-icon name="home-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class="active" [routerLink]="['/history/history']">
+        <a href=""> <span class="icon">
+            <ion-icon name="newspaper-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class=" active" [routerLink]="['/informes/informes']">
+        <a href=""> <span class="icon">
+            <ion-icon name="document-text-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class=" active" [routerLink]="['/config/config']">
+        <a href=""> <span class="icon">
+            <ion-icon name="settings-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class="active" [routerLink]="['/perfil/perfil']">
+        <a href=""> <span class="icon">
+            <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <div class="indicator"><span></span></div>
+    </ul>
+    </div>
+  </ion-content>  

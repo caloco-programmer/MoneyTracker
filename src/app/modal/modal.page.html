@@ -1,0 +1,735 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>modal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">modal</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  
+<ion-modal #modalGasto [isOpen]="isModalGastoOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{"GastosUnico"|translate}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal(modalGasto)">{{"Cerrar"|translate}}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="formulario">
+        <ion-list>
+          <ion-item class="inputs">
+            <label for="">{{"Nombre"|translate}}: </label>
+            <ion-input [(ngModel)]="nombre" placeholder="{{'Nombre'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Descripcion"|translate}}: </label>
+            <ion-input [(ngModel)]="Descripcion" placeholder="{{'Descripcion'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <ion-label>{{"Categoria"|translate}}: </ion-label>
+            <ion-select placeholder="{{'SeleccionarCategoria'|translate}}" [(ngModel)]="id_categoria">
+              <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{categoria.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Tarjeta"|translate}}: </label>
+            <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="onTarjetaChange($event)">
+              <ion-select-option *ngFor="let tarjeta of tarjetasDebito" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          
+  
+          <ion-item  class="inputs">
+            <label for="">{{"Total"|translate}}: $</label>
+            <ion-input 
+              [(ngModel)]="total" 
+              placeholder="{{'Total'|translate}}" 
+              type="number" 
+              inputmode="numeric" 
+              min="0"
+              (ionChange)="onTipoChangeTotal($event)">
+            </ion-input>
+          </ion-item>
+          
+  
+          <ion-item class="inputs" *ngIf="selectFecha === true">
+            <label for="" [(ngModel)]="fecha_compra">{{"FechaCompra"|translate}}: {{ fecha_compra ? fecha_compra : ('Hoy'|translate) }}</label>
+          </ion-item>
+  
+          <ion-item>
+            <ion-select  placeholder="{{'SeleccionFechaCompra'|translate}}" (ionChange)="onTipoChanges($event)" class="inputs">
+              <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+              <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item *ngIf="fecha === true" class="inputs">
+            <label for="">{{"FechaCompra"|translate}}</label>
+            <ion-input [(ngModel)]="fecha_compra" type="date" min="1990-01-01"></ion-input>
+          </ion-item>
+        </ion-list>
+      </div>
+  
+      <div>
+        <ion-button color="morado" (click)="isEditing ? actualizar() :  addGasto('Unico')">
+          {{ isEditing ? ('Actualizar'|translate) : ('Aceptar'|translate) }}
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Modal 2 -->
+<ion-modal #modalGastoMensual [isOpen]="isModalGastoMensualOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{"GastoMensual"|translate}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal(modalGastoMensual)">{{"Cerrar"|translate}}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="formulario">
+        <ion-list>
+          <ion-item class="inputs">
+            <label for="">{{"Nombre"|translate}}: </label>
+            <ion-input [(ngModel)]="nombre" placeholder="{{'Nombre'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Descripcion"|translate}}: </label>
+            <ion-input [(ngModel)]="Descripcion" placeholder="{{'Descripcion'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <ion-label>{{"Categoria"|translate}}: </ion-label>
+            <ion-select placeholder="{{'SeleccionarCategoria'|translate}}" [(ngModel)]="id_categoria">
+              <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{categoria.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Tarjeta"|translate}}: </label>
+            <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="onTarjetaChange($event)">
+              <ion-select-option *ngFor="let tarjeta of tarjetasDebito" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          
+  
+          <ion-item  class="inputs">
+            <label for="">{{"Total"|translate}}: $</label>
+            <ion-input 
+              [(ngModel)]="total" 
+              placeholder="{{'Total'|translate}}" 
+              type="number" 
+              inputmode="numeric" 
+              min="0"
+              (ionChange)="onTipoChangeTotal($event)">
+            </ion-input>
+          </ion-item>
+          
+  
+          <ion-item class="inputs" *ngIf="selectFecha === true">
+            <label for="" [(ngModel)]="fecha_compra">{{"FechaCompra"|translate}}: {{ fecha_compra ? fecha_compra : ('Hoy'|translate) }}</label>
+          </ion-item>
+  
+          <ion-item>
+            <ion-select placeholder="{{'SeleccionFechaCompra'|translate}}" (ionChange)="onTipoChanges($event)" class="inputs">
+              <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+              <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item *ngIf="fecha === true" class="inputs">
+            <label for="">{{"FechaCompra"|translate}}</label>
+            <ion-input [(ngModel)]="fecha_compra" type="date" min="1990-01-01"></ion-input>
+          </ion-item>
+        </ion-list>
+      </div>
+  
+      <div>
+        <ion-button color="morado" (click)="isEditing ? actualizar() :  addGasto('Mensual')">
+          {{ isEditing ? ('Actualizar'|translate) : ('Aceptar'|translate) }}
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+
+ 
+<ion-modal #modalIngreso [isOpen]="isModalIngresoOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{"IngresoUnico"|translate}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal(modalIngreso)">{{"Cerrar"|translate}}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="formulario">
+        <ion-list>
+          <ion-item class="inputs">
+            <label for="">{{"Nombre"|translate}}: </label>
+            <ion-input [(ngModel)]="nombre" placeholder="{{'Nombre'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Descripcion"|translate}}: </label>
+            <ion-input [(ngModel)]="Descripcion" placeholder="{{'Descripcion'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <ion-label>{{"Categoria"|translate}}: </ion-label>
+            <ion-select placeholder="{{'SeleccionarCategoria'|translate}}" [(ngModel)]="id_categoria">
+              <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{categoria.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Tarjeta"|translate}}: </label>
+            <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="onTarjetaChange($event)">
+              <ion-select-option *ngFor="let tarjeta of tarjetasDebito" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          
+  
+          <ion-item  class="inputs">
+            <label for="">{{"Total"|translate}}: $</label>
+            <ion-input 
+              [(ngModel)]="total" 
+              placeholder="{{'Total'|translate}}" 
+              type="number" 
+              inputmode="numeric" 
+              min="0"
+              (ionChange)="onTipoChangeTotal($event)">
+            </ion-input>
+          </ion-item>
+          
+  
+          <ion-item class="inputs" *ngIf="selectFecha === true">
+            <label for="" [(ngModel)]="fecha_compra">{{"FechaCompra"|translate}}: {{ fecha_compra ? fecha_compra : ('Hoy'|translate) }}</label>
+          </ion-item>
+  
+          <ion-item>
+            <ion-select placeholder="{{'SeleccionFechaCompra'|translate}}" (ionChange)="onTipoChanges($event)" class="inputs">
+              <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+              <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item *ngIf="fecha === true" class="inputs">
+            <label for="">{{"FechaCompra"|translate}}</label>
+            <ion-input [(ngModel)]="fecha_compra" type="date" min="1990-01-01"></ion-input>
+          </ion-item>
+        </ion-list>
+      </div>
+  
+      <div>
+        <ion-button color="morado" (click)="isEditing ? actualizar() :  addIngreso('Unico')">
+          {{ isEditing ? ('Actualizar'|translate) : ('Aceptar'|translate) }}
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Modal 2 -->
+<ion-modal #modalIngresoMensual [isOpen]="isModalIngresoMensualOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{"IngresoMensual"|translate}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal(modalIngresoMensual)">{{"Cerrar"|translate}}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="formulario">
+        <ion-list>
+        <ion-item class="inputs">
+          <label for="">{{"Nombre"|translate}}: </label>
+          <ion-input [(ngModel)]="nombre" placeholder="{{'Nombre'|translate}}" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="inputs">
+          <label for="">{{"Descripcion"|translate}}: </label>
+          <ion-input [(ngModel)]="Descripcion" placeholder="{{'Descripcion'|translate}}" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="inputs">
+          <ion-label>{{"Categoria"|translate}}: </ion-label>
+          <ion-select placeholder="{{'SeleccionarCategoria'|translate}}" [(ngModel)]="id_categoria">
+            <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{categoria.nombre}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="inputs">
+          <label for="">{{"Tarjeta"|translate}}: </label>
+          <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="onTarjetaChange($event)">
+            <ion-select-option *ngFor="let tarjeta of tarjetasDebito" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        
+
+        <ion-item  class="inputs">
+          <label for="">{{"Total"|translate}}: $</label>
+          <ion-input 
+            [(ngModel)]="total" 
+            placeholder="{{'Total'|translate}}" 
+            type="number" 
+            inputmode="numeric" 
+            min="0"
+            (ionChange)="onTipoChangeTotal($event)">
+          </ion-input>
+        </ion-item>
+        
+
+        <ion-item class="inputs" *ngIf="selectFecha === true">
+          <label for="" [(ngModel)]="fecha_compra">{{"FechaCompra"|translate}}: {{ fecha_compra ? fecha_compra : ('Hoy'|translate) }}</label>
+        </ion-item>
+
+        <ion-item>
+          <ion-select placeholder="{{'SeleccionFechaCompra'|translate}}" (ionChange)="onTipoChanges($event)" class="inputs">
+            <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+            <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="fecha === true" class="inputs">
+          <label for="">{{"FechaCompra"|translate}}</label>
+          <ion-input [(ngModel)]="fecha_compra" type="date" min="1990-01-01"></ion-input>
+        </ion-item>
+      </ion-list>
+      </div>
+  
+      <div>
+        <ion-button color="morado" (click)="isEditing ? actualizar() :  addIngreso('Mensual')">
+          {{ isEditing ? ('Actualizar'|translate) : ('Aceptar'|translate) }}
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Modal 3 -->
+<ion-modal #modalGastoCuotas [isOpen]="isModalGastoCuotaOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{"GastosCuotas"|translate}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal(modalGastoCuotas)">{{"Cerrar"|translate}}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="formulario">
+        <ion-list>
+        <ion-item class="inputs">
+          <label for="">{{"Nombre"|translate}}: </label>
+          <ion-input [(ngModel)]="nombre" placeholder="{{'Nombre'|translate}}" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="inputs">
+          <label for="">{{"Descripcion"|translate}}: </label>
+          <ion-input [(ngModel)]="Descripcion" placeholder="{{'Descripcion'|translate}}" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="inputs">
+          <ion-label>{{"Categoria"|translate}}: </ion-label>
+          <ion-select placeholder="{{'SeleccionarCategoria'|translate}}" [(ngModel)]="id_categoria">
+            <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{categoria.nombre}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="inputs">
+          <label for="">{{"Tarjeta"|translate}}: </label>
+          <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="onTipoChange($event)">
+            <ion-select-option *ngFor="let tarjeta of tarjetasCredito" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        
+
+        <ion-item *ngIf="tarjetaVista === true" class="inputs">
+          <label for="">{{"Total"|translate}}:$ {{totalCuotas}}</label>
+          
+        </ion-item>
+        
+
+      
+  
+        <ion-item *ngIf="tarjetaVista === true" class="inputs">
+          <label for="">{{"ValorCuota"|translate}} :$ </label>
+          <ion-input [(ngModel)]="valorCuota" 
+          placeholder="{{'ValorCuota'|translate}}"
+          type="number" inputmode="numeric" pattern="\d{1,3}(?:\.\d{3})*" (ngModelChange)="onCuotasChange($event)"></ion-input>
+        </ion-item>
+  
+        <ion-item *ngIf="tarjetaVista === true" class="inputs">
+          <ion-label>{{"CantidadCuotas"|translate}}: </ion-label>
+          <ion-input [(ngModel)]="cantidadCuotas" 
+          placeholder="{{'CantidadCuotas'|translate}}"
+          type="number" inputmode="numeric" pattern="\d{1,3}(?:\.\d{3})*" (ngModelChange)="onCuotasChange($event)"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="tarjetaVista === true" class="inputs">
+          <ion-label>{{"CuotasPaga"|translate}}: </ion-label>
+          <ion-input [(ngModel)]="cantidadCuotasPagadas" 
+          placeholder="{{'CuotasPaga'|translate}}"
+          type="number" inputmode="numeric" pattern="\d{1,3}(?:\.\d{3})*" ></ion-input>
+        </ion-item>
+  
+        <ion-item *ngIf="tarjetaVista === true" class="inputs">
+          <ion-label>{{"TotalPago"|translate}}: {{ totalCuotas }}</ion-label>
+        </ion-item>
+  
+         
+        <ion-item class="inputs" *ngIf="selectFecha === true">
+          <label for="" [(ngModel)]="fecha_compra">{{"FechaCompra"|translate}}: {{ fecha_compra ? fecha_compra : ('Hoy'|translate) }}</label>
+        </ion-item>
+
+        <ion-item>
+          <ion-select placeholder="{{'SeleccionFechaCompra'|translate}}" (ionChange)="onTipoChanges($event)" class="inputs">
+            <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+            <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="fecha === true" class="inputs">
+          <label for="">{{"FechaCompra"|translate}}</label>
+          <ion-input [(ngModel)]="fecha_compra" type="date" min="1990-01-01"></ion-input>
+        </ion-item>
+  
+        <ion-item *ngIf="tarjetaVista === true" class="inputs">
+          <label for="">{{"TarjetaPagar"|translate}}: </label>
+            <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta_pagar">
+              <ion-select-option *ngFor="let tarjetaDebito of tarjetasDebito" [value]="tarjetaDebito.id_tarjeta">{{tarjetaDebito.nombre}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+  
+        </ion-list>
+      </div>
+  
+      <div>
+        <ion-button color="morado" (click)="addDeuda()">
+          {{"Aceptar"|translate}}
+        </ion-button>
+        
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalAhorro [isOpen]="isModalAhorroOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{"AhorrosManuales"|translate}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal(modalAhorro)">{{"Cerrar" |translate}}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="formulario">
+        <ion-list>
+          
+          <ion-item class="inputs">
+            <label for="">{{"Nombre"|translate}}: </label>
+            <ion-input [(ngModel)]="nombre" placeholder="{{'Nombre'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Descripcion"|translate}}: </label>
+            <ion-input [(ngModel)]="Descripcion" placeholder="{{'Descripcion'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <ion-label>{{"Categoria"|translate}}: </ion-label>
+            <ion-select placeholder="{{'SeleccionarCategoria'|translate}}" [(ngModel)]="id_categoria">
+              <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{categoria.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Tarjeta"|translate}}: </label>
+            <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="onTarjetaChange($event)">
+              <ion-select-option *ngFor="let tarjeta of tarjetasDebito" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          
+  
+          <ion-item  class="inputs">
+            <label for="">{{"TotalAlcanzar"|translate}}: $ </label>
+            <ion-input [(ngModel)]="total_alcanzar" placeholder="Total" type="number" inputmode="numeric" pattern="\d{1,3}(?:\.\d{3})*"></ion-input>
+          </ion-item>
+
+  
+          <ion-item class="inputs" *ngIf="selectFecha === true">
+            <label for="" [(ngModel)]="fecha_compra">{{"FechaInicio"|translate}}: {{ fecha_compra ? fecha_compra : ('Hoy'|translate) }}</label>
+          </ion-item>
+  
+          <ion-item>
+            <ion-select placeholder="{{'SeleccionFechaInicio'|translate}}" (ionChange)="onTipoChanges($event)" class="inputs">
+              <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+              <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item *ngIf="fecha === true" class="inputs">
+            <label for="">{{"FechaInicio"|translate}}</label>
+            <ion-input [(ngModel)]="fecha_compra" type="date" min="1990-01-01"></ion-input>
+          </ion-item>
+
+          <ion-item class="inputs" *ngIf="selectFecha2 === true">
+            <label for="" [(ngModel)]="fecha_limite">{{"FechaLimite"|translate}}: {{ fecha_limite ? fecha_limite : ('Hoy'|translate) }}</label>
+          </ion-item>
+  
+          <ion-item>
+            <ion-select placeholder="{{'SeleccionFechaLimite'|translate}}" (ionChange)="onTipoChangesl($event)" class="inputs">
+              <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+              <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item *ngIf="fechaLimite === true" class="inputs">
+            <label for="">{{"FechaLimite"|translate}}</label>
+            <ion-input [(ngModel)]="fecha_limite" type="date" min="1990-01-01"></ion-input>
+          </ion-item>
+  
+  
+        </ion-list>
+      </div>
+  
+      <div>
+        <ion-button color="morado" (click)="addAhorro('Manual')">
+          {{ isEditing ? ('Actualizar'|translate) : ('Aceptar'|translate) }}
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalAhorroMensual [isOpen]="isModalAhorroMensualOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{"AhorrosAutomaticos"|translate}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal(modalAhorroMensual)">{{"Cerrar"|translate}}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="formulario">
+        <ion-list>
+          
+          <ion-item class="inputs">
+            <label for="">{{"Nombre"|translate}}: </label>
+            <ion-input [(ngModel)]="nombre" placeholder="{{'Nombre'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Descripcion"|translate}}: </label>
+            <ion-input [(ngModel)]="Descripcion" placeholder="{{'Descripcion'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <ion-label>{{"Categoria"|translate}}: </ion-label>
+            <ion-select placeholder="{{'SeleccionarCategoria'|translate}}" [(ngModel)]="id_categoria">
+              <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{categoria.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Tarjeta"|translate}}: </label>
+            <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="onTarjetaChange($event)">
+              <ion-select-option *ngFor="let tarjeta of tarjetasDebito" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          
+          <ion-item  class="inputs">
+            <label for="">{{"TotalAhorro"|translate}}: $ </label>
+            <ion-input [(ngModel)]="totalAhorrar" placeholder="Total" type="number" inputmode="numeric" pattern="\d{1,3}(?:\.\d{3})*"></ion-input>
+          </ion-item>
+          <ion-item  class="inputs">
+            <label for="">{{"TotalAlcanzar"|translate}}: $ </label>
+            <ion-input [(ngModel)]="total_alcanzar" placeholder="Total" type="number" inputmode="numeric" pattern="\d{1,3}(?:\.\d{3})*"></ion-input>
+          </ion-item>
+
+  
+          <ion-item class="inputs" *ngIf="selectFecha === true">
+            <label for="" [(ngModel)]="fecha_compra">{{"FechaInicio"|translate}}: {{ fecha_compra ? fecha_compra : ('Hoy'|translate) }}</label>
+          </ion-item>
+  
+          <ion-item>
+            <ion-select placeholder="{{'SeleccionFechaInicio'|translate}}" (ionChange)="onTipoChanges($event)" class="inputs">
+              <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+              <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item *ngIf="fecha === true" class="inputs">
+            <label for="">{{"FechaInicio"|translate}}</label>
+            <ion-input [(ngModel)]="fecha_compra" type="date" min="1990-01-01"></ion-input>
+          </ion-item>
+
+          <ion-item class="inputs" *ngIf="selectFecha2 === true">
+            <label for="" [(ngModel)]="fecha_limite">{{"FechaLimite"|translate}}: {{ fecha_limite ? fecha_limite : ('Hoy'|translate) }}</label>
+          </ion-item>
+  
+          <ion-item>
+            <ion-select placeholder="{{'SeleccionFechaLimite'|translate}}" (ionChange)="onTipoChangesl($event)" class="inputs">
+              <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+              <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item *ngIf="fechaLimite === true" class="inputs">
+            <label for="">{{"FechaLimite"|translate}}</label>
+            <ion-input [(ngModel)]="fecha_limite" type="date" min="1990-01-01"></ion-input>
+          </ion-item>
+  
+        </ion-list>
+      </div>
+  
+      <div>
+        <ion-button color="morado" (click)="addAhorro('Automatico')">
+          {{ isEditing ? ('Actualizar'|translate) : ('Aceptar'|translate) }}
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+
+<ion-modal #modalPrestamo [isOpen]="isModalPrestamoOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{"Prestamos"|translate}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal(modalPrestamo)">{{"Cerrar"|translate}}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="formulario">
+        <ion-list>
+          
+          <ion-item class="inputs">
+            <label for="">{{"Nombre"|translate}}: </label>
+            <ion-input [(ngModel)]="nombre" placeholder="{{'Nombre'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Descripcion"|translate}}: </label>
+            <ion-input [(ngModel)]="Descripcion" placeholder="{{'Descripcion'|translate}}" type="text"></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <ion-label>{{"Categoria"|translate}}: </ion-label>
+            <ion-select placeholder="{{'SeleccionarCategoria'|translate}}" [(ngModel)]="id_categoria">
+              <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{categoria.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="inputs">
+            <ion-label>{{"Amigo"|translate}}: </ion-label>
+            <ion-select placeholder="{{'SeleccionAmigo'|translate}}" [(ngModel)]="friend_username" (ionChange)="onFriendSelect()">
+              <ion-select-option *ngFor="let friend of friends" [value]="friend.username">{{friend.username}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="inputs">
+            <label for="">{{"CorreoDeudor"|translate}}: </label>
+            <ion-input [(ngModel)]="correo"  type="text" placeholder="{{'CorreoDeudor'|translate}}" ></ion-input>
+          </ion-item>
+  
+          <ion-item class="inputs">
+            <label for="">{{"Tarjeta"|translate}}: </label>
+            <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="onTarjetaChange($event)">
+              <ion-select-option *ngFor="let tarjeta of tarjetasDebito" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          
+  
+          <ion-item  class="inputs">
+            <label for="">{{"TotalPrestado"|translate}}: $ </label>
+            <ion-input [(ngModel)]="total" placeholder="{{'TotalPrestado'|translate}}" type="number" inputmode="numeric" pattern="\d{1,3}(?:\.\d{3})*"></ion-input>
+          </ion-item>
+         
+  
+          <ion-item  class="inputs">
+            <label for="">{{"TotalPagado"|translate}} </label>
+            <ion-input [(ngModel)]="total_pagado" placeholder="{{'TotalPagado'|translate}}" type="number" ></ion-input>
+          </ion-item>
+
+          <ion-item class="inputs" *ngIf="selectFecha === true">
+            <label for="" [(ngModel)]="fecha_compra">{{"FechaIngreso"|translate}}: {{ fecha_compra ? fecha_compra : ('Hoy'|translate) }}</label>
+          </ion-item>
+  
+          <ion-item>
+            <ion-select placeholder="{{'SeleccionFechaIngreso'|translate}}" (ionChange)="onTipoChanges($event)" class="inputs">
+              <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+              <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item *ngIf="fecha === true" class="inputs">
+            <label for="">{{"FechaIngreso"|translate}}</label>
+            <ion-input [(ngModel)]="fecha_compra" type="date" min="1990-01-01"></ion-input>
+          </ion-item>
+
+          <ion-item class="inputs" *ngIf="selectFecha2 === true">
+            <label for="" [(ngModel)]="fecha_limite">{{"FechaLimite"|translate}}: {{ fecha_limite ? fecha_limite : ('Hoy'|translate) }}</label>
+          </ion-item>
+  
+          <ion-item>
+            <ion-select placeholder="{{'SeleccionFechaLimite'|translate}}" (ionChange)="onTipoChangesl($event)" class="inputs">
+              <ion-select-option value="hoy">{{"Hoy"|translate}}</ion-select-option>
+              <ion-select-option value="personalizado">{{"Perso"|translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item *ngIf="fechaLimite === true" class="inputs">
+            <label for="">{{"FechaLimite"|translate}}</label>
+            <ion-input [(ngModel)]="fecha_limite" type="date" min="1990-01-01"></ion-input>
+          </ion-item>
+  
+
+  
+        </ion-list>
+      </div>
+  
+      <div>
+        <ion-button color="morado" (click)="addPrestamo()">
+          {{ isEditing ? ('Actualizar'|translate) : ('Aceptar'|translate) }}
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+</ion-content>

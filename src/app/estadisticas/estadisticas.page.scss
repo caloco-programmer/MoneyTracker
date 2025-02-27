@@ -1,0 +1,161 @@
+ion-icon {
+  font-size: 40px;
+  align-items: center;
+}
+ion-text{
+  font-size: 15px;
+  align-items: center;
+}
+ion-icon {
+  font-size: 40px;
+  align-items: center;
+}
+ion-text{
+  font-size: 15px;
+  align-items: center;
+}
+
+ion-icon {
+  font-size: 40px;
+}
+
+ion-card {
+  margin: 30px;
+}
+
+.final {
+  position: relative;
+  left: 25px;
+}
+ion-list{
+  --ion-item-background:transparent;
+}
+ion-item{
+  --ion-item-background:transparent;
+
+}
+.busqueda{
+position: relative;
+z-index: 0;
+}  
+.desglose {
+width: 70%;
+height: 11%;
+z-index: 100;
+background-color: rgb(255, 223, 223);
+position: relative;
+border: 5px;
+border-color: white;
+border-left: 10px solid rgb(123, 155, 226);
+margin-bottom: 12px;
+transition: max-height 0.3s ease-in-out;
+max-height: 60px; /* Tamaño cerrado */
+overflow: hidden;
+}
+.cuentas{
+font-size: 30px;
+color: black;
+align-items: center;
+position: relative;
+top: 10px;
+}
+
+
+
+
+.datos {
+width: 100%;
+height: 5%;
+bottom: -2%;
+color: rgb(255, 255, 255);
+z-index: 1;
+background-color: rgb(255, 255, 255);
+position: relative;
+border: 10px;
+border-color: white;
+margin-bottom: 5px;
+border-left: 10px solid rgb(123, 155, 226);
+}
+
+.cuenta {
+width: 100%;
+height: 11%;
+bottom: -2%;
+z-index: 1;
+background-color: rgb(255, 223, 223);
+position: relative;
+border: 5px;
+border-color: white;
+border-left: 10px solid rgb(123, 155, 226);
+margin-bottom: 12px;
+transition: max-height 0.3s ease-in-out;
+max-height: 60px; /* Tamaño cerrado */
+overflow: hidden;
+}
+
+.cuenta.expanded {
+max-height: 500px; /* Tamaño expandido (ajústalo según sea necesario) */
+}
+
+.extra-content {
+background-color: #ffe6e6; /* Color rosado */
+overflow: hidden;
+}
+
+.form {
+margin-bottom: 5px;
+bottom: -10%;
+font-size: 25px;
+position: relative;
+z-index: 100;  
+left: 10px;
+color: rgb(0, 0, 0);
+
+}
+
+ion-icon {
+font-size: 40px;
+}
+
+ion-card {
+margin: 30px;
+}
+
+.final {
+position: relative;
+left: 230px;
+}
+ion-list{
+--ion-item-background:transparent;
+}
+ion-item{
+--ion-item-background:transparent;
+
+}
+.total{
+position: relative;
+height: 30px;
+width: 30%;
+border-radius:10px ;
+background-color: red;
+color: black;
+}
+.total_text{
+position: relative;
+left: 5px;
+top: 5px;
+}
+.descargar{
+position: relative;
+left: 250px;
+color: black;
+
+
+}
+.custom-modal {
+--width: 90%;
+--height: auto;
+--max-height: 80%;
+--border-radius: 12px;
+--margin: 0;
+}

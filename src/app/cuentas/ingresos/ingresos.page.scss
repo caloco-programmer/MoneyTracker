@@ -1,0 +1,269 @@
+
+
+.navigation{
+  width: 90%;
+  margin: auto;
+  height: 70px;
+  background: #209cff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  border-radius: 10px;
+  position: fixed;
+  bottom: 0;
+}
+.navigation ul{
+  display: flex;
+  position: relative;
+  width: 350px;
+}
+.navigation ul li{
+  position: relative;
+  list-style: none;
+  width: 70px;
+  height: 70px;
+  z-index: 10;
+}
+
+.navigation ul li a{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 1;
+}
+.navigation ul li a .icon{
+   position: relative;
+   display: block;
+   font-size: 160%;
+   color: black;
+   line-height: 75px;
+   opacity: 1;
+   z-index: 1;
+}
+
+.navigation ul li.active a .icon{
+  opacity: 1;
+}
+
+ion-list{
+  --ion-item-background:transparent;
+}
+ion-item{
+  --ion-item-background:transparent;
+
+}
+.datos {
+  width: 100%;
+  color: rgb(0, 0, 0);
+  position: relative;
+  margin-bottom: 30%;
+}
+ion-item{
+  margin-top: 35px;
+}
+
+.cuenta{
+  background-color: rgb(235, 248, 248);
+  width: 85%;
+  
+  margin: auto;
+  margin-top: 10%;
+  border-radius: 7px;
+  -webkit-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+-moz-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+position: relative;
+}
+
+.iconos{
+  top: 0;
+  right: 0;
+  
+  position: absolute;
+}
+h3{
+  position: absolute;
+  top: 0;
+  margin-top: 2px;
+  margin-left: 10px;
+}
+.cuenta::before {
+  content: '';
+  position: absolute;
+  top: 35px; /* Ajusta este valor para cambiar la posición de la línea */
+  left: 0;
+  width: 100%;
+  height: 5px; /* Grosor de la línea */
+  background-color: rgb(245, 0, 0); /* Color de la línea */
+}
+.cuadrado::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10px; /* Posición de la línea vertical desde el borde izquierdo */
+  width: 10px; /* Grosor de la línea vertical */
+  height: 100%;
+  background-color: blue; /* Color de la línea vertical */
+}
+
+.despliegue{
+  top: 0 ;
+  right: 0;
+  left: 100;
+  position: absolute;
+}
+
+.desgloce{
+  background-color: rgb(235, 248, 248);
+  width: 85%;
+  height: 5%;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border-radius: 7px;
+  -webkit-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+-moz-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+position: relative;
+border-bottom: 5px solid red;
+}
+
+
+
+.container{
+  left: 40%;
+  bottom: 30%;
+  position: relative;
+}
+.dinero{
+  
+  color: black;
+  position: relative;
+  font-size: 130%;
+}
+.money{
+  top: 10%;
+  color: black;
+  position: relative;
+  font-size: 130%;
+}
+.expand{
+  background-color: rgb(235, 248, 248);
+  width: 85%;
+  height: 18%;
+  margin: auto;
+  border-radius: 7px;
+  -webkit-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+-moz-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+position: relative;
+border-left:5px solid red ;
+  
+}
+.grafico{
+  margin-bottom: 30%;
+}
+
+
+swiper-container {
+  width: 85%;
+  height: 150px;
+  margin: 20px auto;
+  text-align: center;
+  overflow: hidden; // Importante para evitar superposición
+  position: relative; // Importante para el posicionamiento
+}
+
+swiper-slide {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 15px;
+  border: 2px dashed #ff4444;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: relative;
+  cursor: pointer;
+  width: 100% !important; // Forzar ancho completo
+  transform: none !important; // Evitar transformaciones no deseadas
+  margin: 0 !important; // Eliminar márgenes que puedan causar superposición
+
+  &::before {
+    content: '+';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 60px;
+    color: #ff4444;
+    opacity: 0.7;
+  }
+
+  &:hover {
+    background: #fff5f5;
+    border-style: solid;
+    
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.slide-content {
+  width: 90%;
+  text-align: center;
+  padding: 10px;
+  
+  h2 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+  
+  p {
+    color: #666;
+    font-size: 0.85em;
+    margin: 0;
+  }
+}
+
+// Configuración específica de Swiper
+:host ::ng-deep {
+  .swiper {
+    overflow: hidden !important;
+  }
+
+  .swiper-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .swiper-slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .swiper-pagination {
+    bottom: 5px !important;
+    position: absolute;
+  }
+
+  .swiper-pagination-bullet {
+    background: #ff4444;
+    opacity: 0.5;
+    
+    &-active {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+}
+.total{
+  font-size: 140%;
+}

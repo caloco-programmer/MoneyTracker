@@ -1,0 +1,275 @@
+/* Manteniendo los estilos originales pero haciéndolos responsivos */
+.cuenta {
+  background-color: rgb(235, 248, 248);
+  width: 85%;
+  min-height: 18%;
+  margin: auto;
+  margin-top: clamp(5%, 10%, 10%);
+  border-radius: 7px;
+  -webkit-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+  -moz-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+  box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+  position: relative;
+  padding: 1rem;
+}
+
+.cuenta::before {
+  content: '';
+  position: absolute;
+  top: 25px;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: rgb(245, 0, 0);
+}
+
+.container {
+  position: relative;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    left: 40%;
+    bottom: 30%;
+  }
+}
+
+.dinero {
+  color: black;
+  position: relative;
+  font-size: 130%;
+  margin-bottom: 0.5rem;
+}
+
+.desgloce {
+  background-color: rgb(235, 248, 248);
+  width: 85%;
+  min-height: 5%;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border-radius: 7px;
+  -webkit-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+  -moz-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+  box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+  position: relative;
+  border-bottom: 5px solid red;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expand {
+  background-color: rgb(235, 248, 248);
+  width: 85%;
+  height: auto;
+  min-height: 18%;
+  margin: auto;
+  border-radius: 7px;
+  -webkit-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+  -moz-box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+  box-shadow: -2px -1px 19px -2px rgba(0,0,0,0.58);
+  position: relative;
+  border-left: 5px solid red;
+  padding: 1rem;
+}
+
+h3 {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.navigation {
+  width: 90%;
+  margin: auto;
+  height: 70px;
+  background: #209cff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  border-radius: 10px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navigation ul {
+  display: flex;
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  justify-content: space-around;
+  padding: 0;
+}
+
+.navigation ul li {
+  position: relative;
+  list-style: none;
+  width: 70px;
+  height: 70px;
+  z-index: 10;
+}
+
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  font-size: 160%;
+  color: black;
+  line-height: 75px;
+  opacity: 1;
+  z-index: 1;
+}
+
+swiper-container {
+  width: 85%;
+  height: 150px;
+  margin: 20px auto;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+swiper-slide {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 15px;
+  border: 2px dashed #ff4444;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: relative;
+  cursor: pointer;
+  width: 100% !important;
+  transform: none !important;
+  margin: 0 !important;
+}
+
+.slide-content {
+  width: 90%;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Ajustes responsivos para pantallas pequeñas */
+@media (max-width: 320px) {
+  .navigation ul {
+    width: 100%;
+  }
+  
+  .navigation ul li {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .navigation ul li a .icon {
+    font-size: 140%;
+    line-height: 60px;
+  }
+  
+  .dinero {
+    font-size: 120%;
+  }
+}
+
+/* Ajustes para tablets */
+@media (min-width: 768px) {
+  .cuenta, .desgloce, .expand {
+    width: 80%;
+    margin: auto;
+  }
+  
+  swiper-container {
+    width: 80%;
+  }
+}
+
+/* Ajustes para desktop */
+@media (min-width: 1024px) {
+  .cuenta, .desgloce, .expand {
+    width: 70%;
+    max-width: 1200px;
+  }
+  
+  swiper-container {
+    width: 70%;
+    max-width: 1200px;
+  }
+  
+  .container {
+    padding: 1rem;
+  }
+}
+
+/* Mantener estilos del indicator original */
+.indicator {
+  position: absolute;
+  left: -20px;
+  width: 70px;
+  height: 65px;
+  top: -1px;
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+  background-color: white;
+  cursor: pointer;
+  transition: 0.5s;
+  z-index: 0;
+}
+
+.indicator::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: -20px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border-top-right-radius: 20px;
+  box-shadow: 4px -6px 0 2px white;
+}
+
+.indicator::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: -20px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border-top-left-radius: 20px;
+  box-shadow: -4px -6px 0 2px white;
+}
+
+.espacio {
+  margin: 30%;
+}
+
+/* Mantener estilos de las listas y items */
+ion-list {
+  --ion-item-background: transparent;
+}
+
+ion-item {
+  --ion-item-background: transparent;
+  margin-top: 35px;
+}
+
+/* Progress Bars originales */
+ion-progress-bar {
+  margin-top: 0.5rem;
+  height: 8px;
+  border-radius: 4px;
+  --progress-background: var(--ion-color-primary);
+  --buffer-background: var(--ion-color-light);
+}

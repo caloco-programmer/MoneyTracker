@@ -1,0 +1,192 @@
+
+<div class="ion-page" id="main-content" scroll="false">
+  <ion-header>
+    <ion-toolbar class="barra" color="secundary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{"Prestamos"|translate}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding" >
+   
+
+
+
+ 
+
+  <ion-icon name="add-circle-outline" size="large" slot="end"></ion-icon>
+  
+
+  <div *ngFor="let prestamo of prestamos; let i = index"  class="tarjeta-container">
+    <div class="tarjeta" *ngIf="prestamo.user_prestamo == persona.username">
+      <!-- Header with remove icon -->
+      <div class="tarjeta-header">
+        <ion-icon 
+          *ngIf="mostrarEliminarIconos" 
+          name="remove-circle-outline" 
+          size="large" 
+          class="remove-icon">
+        </ion-icon>
+      </div>
+  
+      <!-- Main content grid -->
+      <div class="tarjeta-grid">
+        <!-- Left column -->
+        <div class="tarjeta-column">
+          <div class="info-row">
+            <div class="label">{{"Nombre"|translate}}</div>
+            <div class="value">{{prestamo.nombre}}</div>
+          </div>
+          <div class="info-row">
+            <div class="label">{{"Total"|translate}}</div>
+            <div class="value">{{prestamo.total | currency: getSelectedCurrency()}}</div>
+          </div>
+          <div class="info-row">
+            <div class="label">{{"Categoria"|translate}}</div>
+            <div class="value">{{prestamo.categoria || 'No especificada'}}</div>
+          </div>
+        </div>
+  
+        <!-- Right column -->
+        <div class="tarjeta-column">
+          <div class="info-row">
+            <div class="label">{{"TotalPagado"|translate}}</div>
+            <div class="value">{{prestamo.total_pagado| currency: getSelectedCurrency()}}</div>
+          </div>
+          <div class="info-row">
+            <div class="label">{{"TotalRestante"|translate}}</div>
+            <div class="value">{{prestamo.total - prestamo.total_pagado| currency: getSelectedCurrency()}}</div>
+          </div>
+          <div class="info-row">
+            <div class="label">{{"Prestado"|translate}}</div>
+            <div class="value">{{prestamo.user_friend}}</div>
+          </div>
+          
+        </div>
+      </div>
+  
+      <!-- Installments progress section -->
+      <div class="cuotas-section">
+        <div class="cuotas-header">
+          <span>{{"ProgresoPrestamo"|translate}}</span>
+          <span class="cuotas-count">{{ (prestamo.total_pagado * 100) / prestamo.total }}%</span>
+
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" 
+               [style.width]="(prestamo.total_pagado * 100 / prestamo.total) + '%'">
+          </div>
+        </div>
+        
+      </div>
+  
+      <!-- Description section -->
+      <div class="descripcion-section">
+        <div class="label">{{"Descripcion"|translate}}</div>
+        <div class="value">{{prestamo.descripcion || 'Sin descripción'}}</div>
+      </div>
+  
+      <!-- Footer -->
+      <div class="tarjeta-footer" >
+       {{"TarjetaRecibir"|translate}}: {{prestamo.tarjeta}}
+      </div>
+      
+    </div>
+  </div>
+  <div class="espacio">
+
+  </div>
+
+
+
+
+
+
+  <ion-modal #modalprestamo [isOpen]="isModalprestamoOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{"Prestamos"|translate}}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal(modalprestamo)">{{"Cerrar"|translate}}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="formulario">
+          <ion-list>
+            
+            <ion-item class="inputs">
+              <label for="">{{"Nombre"|translate}}: </label>
+              <ion-input [(ngModel)]="nombre" placeholder="{{'Nombre'|translate}}" type="text"></ion-input>
+            </ion-item>
+    
+            
+    
+            <ion-item  class="inputs">
+              <label for="">{{"Total"|translate}} </label>
+              <ion-input [(ngModel)]="totalAnadir" placeholder="{{'Total'|translate}}" type="number" ></ion-input>
+            </ion-item>
+    
+            <ion-item class="inputs">
+              <label for="">{{"Tarjeta"|translate}}: </label>
+              <ion-select placeholder="{{'SeleccionTarjeta'|translate}}" [(ngModel)]="id_tarjeta" (ionChange)="onTipoChange($event)">
+                <ion-select-option *ngFor="let tarjeta of tarjetasDebito" [value]="tarjeta.id_tarjeta">{{tarjeta.nombre}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+           
+    
+          </ion-list>
+        </div>
+    
+        <div>
+          <ion-button color="morado" (click)="addDinero()">
+            {{ isEditing ? 'Aceptar' : 'Aceptar' }}
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <div class="navigation">
+    <ul>
+    <li class="active" [routerLink]="['/index/index']">
+      <a href=""> <span class="icon">
+          <ion-icon name="home-outline"></ion-icon>
+                  </span>
+      </a>
+    </li>
+  
+    <li class="active" [routerLink]="['/history/history']">
+      <a href=""> <span class="icon">
+          <ion-icon name="newspaper-outline"></ion-icon>
+                  </span>
+      </a>
+    </li>
+  
+    <li class=" active" [routerLink]="['/informes/informes']">
+      <a href=""> <span class="icon">
+          <ion-icon name="document-text-outline"></ion-icon>
+                  </span>
+      </a>
+    </li>
+  
+    <li class=" active" [routerLink]="['/config/config']">
+      <a href=""> <span class="icon">
+          <ion-icon name="settings-outline"></ion-icon>
+                  </span>
+      </a>
+    </li>
+  
+    <li class="active" [routerLink]="['/perfil/perfil']">
+      <a href=""> <span class="icon">
+          <ion-icon name="person-circle-outline"></ion-icon>
+                  </span>
+      </a>
+    </li>
+  
+    <div class="indicator"><span></span></div>
+  </ul>
+  </div>
+  </ion-content>  

@@ -1,0 +1,117 @@
+<ion-menu contentId="main-content">
+    <ion-header>
+      <ion-toolbar >
+        <ion-title>Menu Content</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">This is the menu content.</ion-content>
+  </ion-menu>
+  
+  <div class="ion-page" id="main-content" scroll="false">
+    <ion-header>
+      <ion-toolbar class="barra" color="secundary">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Perfil</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding" *ngIf="persona && user_antiguo">
+       
+        <ion-avatar class="avatar">
+            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            <ion-text class="nombre">{{user_antiguo}}</ion-text>
+          </ion-avatar> 
+          <div class="botones">
+          <ion-button color="celeste" size="medium" [routerLink]="['/amigos/amigos']">{{"Amigos"|translate}}</ion-button>
+          <ion-button color="celeste" size="medium" (click)="logout()">{{"CerrarSesion"|translate}}</ion-button>
+
+            <ion-button color="celeste" (click)="isEditing ? saveChanges() : toggleEdit()" size="medium">
+               {{ isEditing ? ('Guardar'|translate) : ('Editar'|translate) }} 
+            </ion-button>
+          </div>
+         
+          <div name="datos" class="datos"> 
+            <ion-list>
+              <ion-item>
+                <label for="">{{"Nombre"|translate}}: </label>
+               
+                <ion-text *ngIf="!isEditing">{{persona.nomb }}</ion-text>
+                <ion-input *ngIf="isEditing" [(ngModel)]="persona.nomb"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <label for="">{{"Apellido"|translate}}: </label>
+               
+                <ion-text *ngIf="!isEditing">{{ persona.apellido }}</ion-text>
+                <ion-input *ngIf="isEditing" [(ngModel)]="persona.apellido"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <label for="">{{"Usuario"|translate}}: </label>
+               
+                <ion-text *ngIf="!isEditing">{{ persona.username }}</ion-text>
+                <ion-input *ngIf="isEditing" [(ngModel)]="persona.username"></ion-input>
+              </ion-item>
+    
+              
+              <ion-item>
+                <label for="">{{"Correo"|translate}}: </label>
+               
+                <ion-text *ngIf="!isEditing">{{ persona.gmail }}</ion-text>
+                <ion-input *ngIf="isEditing" [(ngModel)]="persona.gmail"></ion-input>
+              </ion-item>
+    
+              <ion-item *ngIf="isEditing">
+                <ion-button *ngIf="isEditing" (click)="isEditing? cancelChanges() :toggleEdit()" color="celeste" size="medium">{{"Cancelar"|translate}}</ion-button>
+              </ion-item>
+            </ion-list>
+              
+          </div>
+          
+          
+   
+
+
+          <div class="navigation">
+            <ul>
+            <li class="active" [routerLink]="['/index/index']">
+              <a href=""> <span class="icon">
+                  <ion-icon name="home-outline"></ion-icon>
+                          </span>
+              </a>
+            </li>
+          
+            <li class="active" [routerLink]="['/history/history']">
+              <a href=""> <span class="icon">
+                  <ion-icon name="newspaper-outline"></ion-icon>
+                          </span>
+              </a>
+            </li>
+          
+            <li class=" active" [routerLink]="['/informes/informes']">
+              <a href=""> <span class="icon">
+                  <ion-icon name="document-text-outline"></ion-icon>
+                          </span>
+              </a>
+            </li>
+          
+            <li class=" active" [routerLink]="['/config/config']">
+              <a href=""> <span class="icon">
+                  <ion-icon name="settings-outline"></ion-icon>
+                          </span>
+              </a>
+            </li>
+          
+            <li class="active" [routerLink]="['/perfil/perfil']">
+              <a href=""> <span class="icon">
+                  <ion-icon name="person-circle-outline"></ion-icon>
+                          </span>
+              </a>
+            </li>
+          
+            <div class="indicator"><span></span></div>
+          </ul>
+          </div>
+    </ion-content>  
+    

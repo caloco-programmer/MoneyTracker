@@ -1,0 +1,275 @@
+<div class="ion-page" id="main-content" scroll="false">
+  <ion-header>
+    <ion-toolbar class="barra" color="secundary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{"Predicciones"|translate}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding" color="gris">
+   <!-- Gastos -->
+
+   <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{"Tarjetas"|translate}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="scroll-table">
+        <table>
+          <thead>
+            <tr>
+              <th>{{"Nombre"|translate}}</th>
+              <th>{{"TotalIngresoMes"|translate}}</th>
+              <th>{{"TotalIngresoProx"|translate}}</th>
+              <th>{{"TotalGastoMes"|translate}}</th>
+              <th>{{"TotalGastoProx"|translate}}</th>
+              <th>{{"TotalMes"|translate}}</th>
+              <th>{{"TotalProx"|translate}}</th>
+
+
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tarjeta of tarjetasDebito">
+              <td>{{tarjeta.nombre}}</td>
+              <td>{{calcularTotalIngresos(tarjeta.id_tarjeta) | currency: getSelectedCurrency()}}</td>
+              <td>{{this.totalProxIngreso | currency: getSelectedCurrency()}}</td>
+              <td>{{calcularTotalGastos(tarjeta.id_tarjeta)| currency: getSelectedCurrency()}}</td>
+              <td>{{(this.totalProxGasto + this.totalGasto) | currency: getSelectedCurrency()}}</td>
+              <td>{{calcularTotales(tarjeta.id_tarjeta) | currency: getSelectedCurrency()}}</td>
+              <td>{{((calcularTotales(tarjeta.id_tarjeta))-this.totalProxGasto-this.totalGasto + this.totalProxIngreso) | currency:'CLP' :true}}</td>
+
+            </tr>
+           
+          </tbody>
+        </table>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{"Gastos"|translate}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="scroll-table">
+        <table>
+          <thead>
+            <tr>
+              <th>{{"Nombre"|translate}}</th>
+              <th>{{"Categoria"|translate}}</th>
+              <th>{{"Descripcion"|translate}}</th>
+              <th>{{"Tarjeta"|translate}}</th>
+              <th>{{"Total"|translate}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let gasto of gastos">
+              <td>{{gasto.nombre}}</td>
+              <td>{{gasto.categoria}}</td>
+              <td>{{gasto.descripcion}}</td>
+              <td>{{gasto.tarjeta}}</td>
+              <td>{{gasto.total | currency: getSelectedCurrency()}}</td>
+
+            </tr>
+           
+            
+          </tbody>
+        </table>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{"Ingresos"|translate}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="scroll-table">
+        <table>
+          <thead>
+            <tr >
+              <th>{{"Nombre"|translate}}</th>
+              <th>{{"Categoria"|translate}}</th>
+              <th>{{"Descripcion"|translate}}</th>
+              <th>{{"Tarjeta"|translate}}</th>
+              <th>{{"Total"|translate}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ingreso of ingresos" >
+              <td>{{ingreso.nombre}}</td>
+              <td>{{ingreso.categoria}}</td>
+              <td>{{ingreso.descripcion}}</td>
+              <td>{{ingreso.tarjeta}}</td>
+              <td>{{ingreso.total | currency: getSelectedCurrency()}}</td>
+
+            </tr>
+           
+          </tbody>
+        </table>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Ahorros -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{"Ahorros"|translate}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="scroll-table">
+        <table>
+          <thead>
+            <tr >
+             
+              <th>{{"Nombre"|translate}}</th>
+              <th>{{"Categoria"|translate}}</th>
+              <th>{{"Descripcion"|translate}}</th>
+              <th>{{"Tarjeta"|translate}}</th>
+              <th>{{"Progreso"|translate}}</th>
+              <th>{{"Total"|translate}}</th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ahorro of ahorros">
+              <td>{{ahorro.nombre}}</td>
+              <td>{{ahorro.categoria}}</td>
+              <td>{{ahorro.descripcion}}</td>
+
+              <td>{{ahorro.tarjeta}}</td>
+              
+
+
+              <td>
+                <div class="progress-bar">
+                  <div class="progress" [style.width.%]="(ahorro.total * 100 / ahorro.total_alcanzar)+ '%'"></div>
+                </div>
+                {{(ahorro.total * 100 / ahorro.total_alcanzar)| number: '1.0-2'}}%
+              </td>
+              <td>{{ahorro.total_alcanzar | currency: getSelectedCurrency()}}</td>
+
+            </tr>
+           
+          </tbody>
+        </table>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Deudas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{"Deudas"|translate}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="scroll-table">
+        <table>
+          <thead>
+            <tr>
+              <th>{{"Nombre"|translate}}</th>
+              <th>{{"Categoria"|translate}}</th>
+              <th>{{"TarjetaPagar"|translate}}</th>
+              <th>{{"TarjetaCredito"|translate}}</th>
+              <th>{{"CuotasTotal"|translate}}</th>
+              <th>{{"CuotasPaga"|translate}}</th>
+              <th>{{"Restantes"|translate}}</th>
+              <th>{{"ValorCuota"|translate}}</th>
+              <th>{{"TotalPagado"|translate}}</th>
+              <th>{{"TotalPagar"|translate}}<th>
+              <th>{{"Total"|translate}}</th>
+              
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let deuda of deudas">
+              <td>{{deuda.nombre}}</td>
+              <td>{{deuda.categoria}}</td>
+              <td>{{deuda.tarjeta_pago}}</td>
+              <td>{{deuda.tarjeta}}</td>
+              <td>{{deuda.cuotas}}</td>
+              <td>{{deuda.cuotas_pago}}</td>
+              <td>{{deuda.cuotas_pagar}}</td>
+              <td>{{deuda.valor_cuota | currency: getSelectedCurrency()}}</td>
+              <td>{{deuda.total_pagado | currency: getSelectedCurrency()}}</td>
+              <td>{{(deuda.total - deuda.total_pagado) | currency: getSelectedCurrency()}}</td>
+              <td>{{deuda.total | currency: getSelectedCurrency()}}</td>
+             
+            </tr>
+           
+          </tbody>
+        </table>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Préstamos -->
+  
+
+  <!-- Ingresos -->
+ 
+
+    <div class="espacio"></div>
+
+
+
+
+    <div class="navigation">
+      <ul>
+      <li class="active" [routerLink]="['/index/index']">
+        <a href=""> <span class="icon">
+            <ion-icon name="home-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class="active" [routerLink]="['/history/history']">
+        <a href=""> <span class="icon">
+            <ion-icon name="newspaper-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class=" active" [routerLink]="['/informes/informes']">
+        <a href=""> <span class="icon">
+            <ion-icon name="document-text-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class=" active" [routerLink]="['/config/config']">
+        <a href=""> <span class="icon">
+            <ion-icon name="settings-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <li class="active" [routerLink]="['/perfil/perfil']">
+        <a href=""> <span class="icon">
+            <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+        </a>
+      </li>
+    
+      <div class="indicator"><span></span></div>
+    </ul>
+    </div>  
+
+    <script>
+      const sectionHeaders = document.querySelectorAll('.section-header');
+      sectionHeaders.forEach((header) => {
+        header.addEventListener('click', () => {
+          header.parentElement.classList.toggle('collapsed');
+        });
+      });
+    </script>
+  </ion-content>  

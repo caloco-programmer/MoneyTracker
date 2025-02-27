@@ -1,0 +1,96 @@
+.slide-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.idioma{
+  background-image: url('~src/assets/imagenes/idioma.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100%; /* Asegura que ocupe toda la altura */
+  display: flex; /* Para centrar el contenido */
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+}
+.bienvenida{
+  background-image: url('~src/assets/imagenes/bienvenida.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100%; /* Asegura que ocupe toda la altura */
+  display: flex; /* Para centrar el contenido */
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+}
+.tarjetas{
+  background-image: url('~src/assets/imagenes/tarjetas.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100%; /* Asegura que ocupe toda la altura */
+  display: flex; /* Para centrar el contenido */
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+}
+.categorias{
+  background-image: url('~src/assets/imagenes/categorias.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100%; /* Asegura que ocupe toda la altura */
+  display: flex; /* Para centrar el contenido */
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+}
+ion-list{
+  background-color: white;
+  color: black;
+  border-radius:10px ;
+}
+
+.slide-content h1 {
+  font-size: 2.5rem;
+  color: #000000;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.slide-content p {
+  font-size: 1.2rem;
+  color: #000000;
+  border-radius: 10px;
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.slide-image {
+  max-width: 80%;
+  max-height: 50%;
+  margin-top: 20px;
+}
+
+ion-button {
+  margin-top: 30px;
+  color: #000000;
+
+  --background: #ffffff;
+  --background-hover: #3171e0;
+  --border-radius: 8px;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000000; /* Color de las flechas */
+  font-size: 2rem;
+}
+
+.swiper-button-next {
+  right: 20px;
+}
+
+.swiper-button-prev {
+  left: 20px;
+}
